@@ -100,9 +100,7 @@ const dinoObjects = dinoData.map((dinoData) => {
 // const  triceratops= new Dino('Triceratops',13000,114,'herbavor','North America', 'Late Cretaceous', 'First discovered in 1889 by Othniel Charles Marsh');
 
 // Create Human Object
-
 // Use IIFE to get human data from form
-
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
@@ -120,4 +118,13 @@ const dinoObjects = dinoData.map((dinoData) => {
 // Remove form from screen
 
 // On button click, prepare and display infographic
+const name = document.getElementById('name');
+const compareBTN = document.getElementById('btn');
+const feet = document.getElementById('feet');
+const inches = document.getElementById('inches');
+const weight = document.getElementById('weight');
+const diet = document.getElementById('diet');
 
+compareBTN.onclick = () => {
+  console.log(name.value, feet.value, inches.value, weight.value, diet.value);
+};
