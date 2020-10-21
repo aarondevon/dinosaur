@@ -87,7 +87,7 @@ function Dino(species, weight, height, diet, where, when, fact) {
 
 // Create Dino Objects
 const dinoObjects = dinoData.map((dinoData) => {
-  new Dino(
+ return new Dino(
     dinoData.species,
     dinoData.weight,
     dinoData.height,
