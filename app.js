@@ -74,57 +74,131 @@ const dinoData = [
   },
 ];
 
+const dinoImages = [
+  './triceratops.png',
+  'Tyrannosaurus Rex',
+  'Anklyosaurus',
+  'Brachiosaurus',
+  'Stegosaurus',
+  'Elasmosaurus',
+  'Pteranodon',
+  'Pigeon'
+]
+
 // Create Dino Constructor
 function Dino(species, weight, height, diet, where, when, fact) {
   this.species = species;
-  this.weight = weight;
-  this.height = height;
-  this.diet = diet;
-  this.where = where;
-  this.when = when;
-  this.fact = fact;
+  this.factsList = [weight, height, diet, where, when, fact]
 }
 
 // Create Dino Objects
 const dinoObjects = dinoData.map((dinoData) => {
- return new Dino(
+  const dinoObject = new Dino(
     dinoData.species,
     dinoData.weight,
     dinoData.height,
     dinoData.diet,
     dinoData.where,
     dinoData.when,
-    dinoData.fact
+    dinoData.fact,
   );
+  dinoObject.img = `./images/${dinoObject.species.toLowerCase()}.png`
+
+  return dinoObject;
 });
-// const  triceratops= new Dino('Triceratops',13000,114,'herbavor','North America', 'Late Cretaceous', 'First discovered in 1889 by Othniel Charles Marsh');
 
 // Create Human Object
 // Use IIFE to get human data from form
 
-// Create Dino Compare Method 1
-// NOTE: Weight in JSON file is in lbs, height in inches.
+// Compare weight
+// NOTE: Weight is in lbs
 
-// Create Dino Compare Method 2
-// NOTE: Weight in JSON file is in lbs, height in inches.
+// Compare height
+// NOTE: Height in inches.
 
-// Create Dino Compare Method 3
-// NOTE: Weight in JSON file is in lbs, height in inches.
+// Compare diet
 
-// Generate Tiles for each Dino in Array
 
-// Add tiles to DOM
 
 // Remove form from screen
 
+
+function getRandomFact(factArray) {
+  const randomIndex = Math.floor(Math.random() * (factArray.length - 1));
+  return factArray[randomIndex];
+}
+
 // On button click, prepare and display infographic
 const name = document.getElementById('name');
-const compareBTN = document.getElementById('btn');
 const feet = document.getElementById('feet');
 const inches = document.getElementById('inches');
 const weight = document.getElementById('weight');
 const diet = document.getElementById('diet');
+const compareBTN = document.getElementById('btn');
+const grid = document.getElementById('grid');
+
+function createPerson (name, feet, inches, weight, diet) {
+  _name = name;
+  _feet = feet;
+  _inches = inches;
+  _weight = weight;
+  _diet = diet;
+
+  function getName() {
+    return _name;
+  }
+
+  function getFeet() {
+    return _feet;
+  }
+
+  function getInches() {
+    return _inches;
+  }
+
+  function getWeight() {
+    return _weight;
+  }
+
+  function getDiet() {
+    return _diet;
+  }
+
+  return {
+    getName: getName,
+    getFeet: getFeet,
+    getInches: getInches,
+    getWeight: getWeight,
+    getDiet: getDiet,
+  }
+
+
+}
+
 
 compareBTN.onclick = () => {
-  console.log(name.value, feet.value, inches.value, weight.value, diet.value);
+  const person = createPerson(name.value, feet.value, inches.value, weight.value, diet.value);
+
+  // Generate Tiles for each Dino in Array
+  dinoObjects.forEach((object, index) => {
+    const div = document.createElement('DIV');
+    const h3 = document.createElement('H3');
+    const species = document.createTextNode(object.species);
+    const img = document.createElement('IMG');
+    const p = document.createElement('P');
+    const randomFact = document.createTextNode(getRandomFact(object.factsList));
+
+    img.src = object.img;
+    div.className = 'grid-item';
+    h3.appendChild(species);
+    p.appendChild(randomFact);
+    div.appendChild(h3);
+    div.appendChild(img);
+    div.appendChild(p);
+
+    // Add tiles to DOM
+    grid.appendChild(div);
+  })
+  console.log(dinoObjects);
+  console.log(person);
 };
