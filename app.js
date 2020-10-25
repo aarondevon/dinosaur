@@ -102,9 +102,9 @@ const dinoObjects = dinoData.map((dinoData) => {
     dinoData.diet,
     dinoData.where,
     dinoData.when,
-    dinoData.fact,
+    dinoData.fact
   );
-  dinoObject.img = `./images/${dinoObject.species.toLowerCase()}.png`
+  dinoObject.img = `./images/${dinoObject.species.toLowerCase()}.png`;
 
   return dinoObject;
 });
@@ -112,7 +112,7 @@ const dinoObjects = dinoData.map((dinoData) => {
 
 // Create Human Object
 // Use IIFE to get human data from form
-function createPerson (name, feet, inches, weight, diet) {
+function createPerson(name, feet, inches, weight, diet) {
   _name = name;
   _feet = parseFloat(feet);
   _inches = parseFloat(inches);
@@ -140,17 +140,20 @@ function createPerson (name, feet, inches, weight, diet) {
     getHeight: getHeight,
     getWeight: getWeight,
     getDiet: getDiet,
-    getIMG: ''
-  }
+  };
 }
 
 // Compare weight
 // NOTE: Weight is in lbs
 function compareWeight(species, dinoWeight, personWeight) {
   if (dinoWeight > personWeight) {
-    return `You weight ${dinoWeight - personWeight} lbs. less than the ${species}`;
+    return `You weight ${
+      dinoWeight - personWeight
+    } lbs. less than the ${species}`;
   } else if (dinoWeight < personWeight) {
-    return `You weight ${personWeight - dinoWeight} lbs. more than the ${species}`;
+    return `You weight ${
+      personWeight - dinoWeight
+    } lbs. more than the ${species}`;
   } else {
     return `Amazing, you weight the same as the ${species}`;
   }
@@ -159,9 +162,13 @@ function compareWeight(species, dinoWeight, personWeight) {
 // NOTE: Height in inches.
 function compareHeight(species, dinoHeight, personHeight) {
   if (dinoHeight > personHeight) {
-    return `You are ${dinoHeight - personHeight} inches shorter than the ${species}`;
+    return `You are ${
+      dinoHeight - personHeight
+    } inches shorter than the ${species}`;
   } else if (dinoHeight < personHeight) {
-    return `You are ${personHeight - dinoHeight} inches taller than the ${species}`;
+    return `You are ${
+      personHeight - dinoHeight
+    } inches taller than the ${species}`;
   } else {
     return `Amazing, you are the same height as the ${species}`;
   }
@@ -177,11 +184,19 @@ function compareDiet(species, dinoDiet, personDiet) {
 
 // getRandomFact
 function getRandomFact(randomKey, dinoObject, person) {
-  switch(randomKey.toLowerCase()) {
+  switch (randomKey.toLowerCase()) {
     case 'weight':
-      return compareWeight(dinoObject.species, dinoObject.weight, person.getWeight());
+      return compareWeight(
+        dinoObject.species,
+        dinoObject.weight,
+        person.getWeight()
+      );
     case 'height':
-      return compareHeight(dinoObject.species, dinoObject.height, person.getHeight());
+      return compareHeight(
+        dinoObject.species,
+        dinoObject.height,
+        person.getHeight()
+      );
     case 'diet':
       return compareDiet(dinoObject.species, dinoObject.diet, person.getDiet());
     case 'where':
@@ -219,7 +234,9 @@ function insertPerson(dinoObjects, personObject, insertIndex) {
 function createTile(dinoObject, fact = undefined) {
   const div = document.createElement('DIV');
   const h3 = document.createElement('H3');
-  const h3Content = document.createTextNode(dinoObject.species || dinoObject.getName()) ;
+  const h3Content = document.createTextNode(
+    dinoObject.species || dinoObject.getName()
+  );
   const img = document.createElement('IMG');
   const p = document.createElement('P');
   const randomFact = document.createTextNode(fact);
@@ -243,8 +260,14 @@ function createTile(dinoObject, fact = undefined) {
 // On button click, prepare and display infographic
 compareBTN.onclick = () => {
   const form = document.getElementById('dino-compare');
-  const person = createPerson(name.value, feet.value, inches.value, weight.value, diet.value);
-  const finalData = insertPerson(dinoObjects, person, 4 );
+  const person = createPerson(
+    name.value,
+    feet.value,
+    inches.value,
+    weight.value,
+    diet.value
+  );
+  const finalData = insertPerson(dinoObjects, person, 4);
   const dinoProperties = getProperties(dinoObjects[0]);
 
   // Remove form from screen
@@ -254,10 +277,14 @@ compareBTN.onclick = () => {
     if ('getName' in object) {
       createTile(object);
     } else if (object.species.toLowerCase() === 'pigeon') {
-    createTile(object, object.fact);
+      createTile(object, object.fact);
     } else {
-      const randomFact = getRandomFact(getRandomKey(dinoProperties), object, person);
+      const randomFact = getRandomFact(
+        getRandomKey(dinoProperties),
+        object,
+        person
+      );
       createTile(object, randomFact);
     }
-  })
+  });
 };
